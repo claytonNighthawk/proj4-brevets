@@ -5,6 +5,11 @@ following rules described at https://rusa.org/octime_alg.html
 and https://rusa.org/pages/rulesForRiders
 """
 import arrow
+import math as m
+
+DISTANCES = [200, 400, 600, 1000]
+MIN_MAX_SPEEDS = {200:{"min": 15, "max": 34}, 400:{"min": 15, "max": 32},
+                  600:{"min": 11.428, "max": 28}, 1000:{"min": 13.333 , "max": 26}, }
 
 #  Note for CIS 322 Fall 2016:
 #  You MUST provide the following two functions
@@ -29,6 +34,10 @@ def open_time( control_dist_km, brevet_dist_km, brevet_start_time ):
        An ISO 8601 format date string indicating the control open time.
        This will be in the same time zone as the brevet start time.
     """
+    if control_dist_km > brevet_dist_km:
+        ...
+    else:
+        ...
     return arrow.now().isoformat()
 
 def close_time( control_dist_km, brevet_dist_km, brevet_start_time ):
@@ -44,6 +53,10 @@ def close_time( control_dist_km, brevet_dist_km, brevet_start_time ):
        An ISO 8601 format date string indicating the control close time.
        This will be in the same time zone as the brevet start time.
     """
+    if control_dist_km > brevet_dist_km:
+        ...
+    else:
+        ...
     return arrow.now().isoformat()
 
 
