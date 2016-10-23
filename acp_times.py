@@ -63,7 +63,7 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 		if actual_dist == 0:
 			continue 
 		max_speed = MIN_MAX_SPEEDS[brev_dist]['max']
-		print("max_speed", max_speed)
+		#print("max_speed", max_speed)
 		minute, hour = m.modf(actual_dist / max_speed)
 		minute = round(minute * 60)
 		time = (hour, minute)
@@ -79,7 +79,7 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 			minute -= 60
 			hour += 1
 		openTime = openTime.replace(hours=+hour, minute=+minute)
-		print("updated open time", openTime)		
+		#print("updated open time", openTime)		
 	return openTime.isoformat()
 
 def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
@@ -107,7 +107,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 		if actual_dist == 0:
 			continue 
 		min_speed = MIN_MAX_SPEEDS[brev_dist]['min']
-		print("min_speed", min_speed)
+		#print("min_speed", min_speed)
 		minute, hour = m.modf(actual_dist / min_speed)
 		minute = round(minute * 60)
 		time = (hour, minute)
@@ -118,11 +118,11 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 	print("starting close time", closeTime)
 	for hour, minute in times:
 		minute = closeTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
-		if minute >= 60:				  #crashes on minute >= 60
+		if minute >= 60:				   #crashes on minute >= 60
 			minute -= 60
 			hour += 1
 		closeTime = closeTime.replace(hours=+hour, minute=+minute)
-		print("updated close time", closeTime)
+		#print("updated close time", closeTime)
 	return closeTime.isoformat()
 
 

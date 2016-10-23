@@ -20,6 +20,7 @@ def test_close_lt_200():
 	assert same(acp.close_time(130, 200, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-01T08:40').isoformat())
 
 def test_open_long_200():
+	print('"should" be {}'.format(arrow.get('2016-01-01T05:53').isoformat()))
 	assert same(acp.open_time(210, 200, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-01T05:53').isoformat())
 
 def test_close_long_200():
@@ -34,6 +35,7 @@ def test_close_lt_300():
 	assert same(acp.close_time(230, 300, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-01T15:20').isoformat())
 
 def test_open_long_300():
+	print('"should" be {}'.format(arrow.get('2016-01-01T09:00').isoformat()))
 	assert same(acp.open_time(310, 300, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-01T09:00').isoformat())
 
 def test_close_long_300():
@@ -63,9 +65,11 @@ def test_close_lt_600():
 	assert same(acp.close_time(530, 600, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-02T11:20').isoformat())
 
 def test_open_long_600():
+	print('"should" be {}'.format(arrow.get('2016-01-01T18:48').isoformat()))
 	assert same(acp.open_time(610, 600, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-01T18:48').isoformat())
 
 def test_close_long_600():
+	print('"should" be {}'.format(arrow.get('2016-01-01T16:00').isoformat()))
 	assert same(acp.close_time(610, 600, arrow.get('2016-01-01T00:00')), arrow.get('2016-01-02T16:00').isoformat())
 
 #1000
