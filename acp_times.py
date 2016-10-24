@@ -56,29 +56,24 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 	else:
 		dists = dist_split(control_dist_km)
 
-	#print("dists", dists)
 	times = []
 	for actual_dist, brev_dist in zip(dists, DISTANCES):
 		# takes distance traveled in the distance legs and turns it into the min time per leg 
 		if actual_dist == 0:
 			continue 
 		max_speed = MIN_MAX_SPEEDS[brev_dist]['max']
-		#print("max_speed", max_speed)
 		minute, hour = m.modf(actual_dist / max_speed)
 		minute = round(minute * 60)
 		time = (hour, minute)
 		times.append(time)
 	
 	openTime = arrow.get(brevet_start_time)
-	#print("open time legs", times)
-	#print("starting open time", openTime)
 	for hour, minute in times:
 		minute = openTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
 		if minute >= 60:				  #crashes on minute = 60
 			minute -= 60
 			hour += 1
-		openTime = openTime.replace(hours=+hour, minute=+minute)
-		#print("updated open time", openTime)		
+		openTime = openTime.replace(hours=+hour, minute=+minute)		
 	return openTime.isoformat()
 
 def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
@@ -99,29 +94,24 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 	else:
 		dists = dist_split(control_dist_km)
 
-	#print("dists", dists)
 	times = []
 	for actual_dist, brev_dist in zip(dists, DISTANCES):
 		# takes distance traveled in the distance legs and turns it into the min time per leg 
 		if actual_dist == 0:
 			continue 
 		min_speed = MIN_MAX_SPEEDS[brev_dist]['min']
-		#print("min_speed", min_speed)
 		minute, hour = m.modf(actual_dist / min_speed)
 		minute = round(minute * 60)
 		time = (hour, minute)
 		times.append(time)
 
 	closeTime = arrow.get(brevet_start_time)
-	#print("close time legs", times)
-	#print("starting close time", closeTime)
 	for hour, minute in times:
 		minute = closeTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
 		if minute >= 60:				   #crashes on minute >= 60
 			minute -= 60
 			hour += 1
 		closeTime = closeTime.replace(hours=+hour, minute=+minute)
-		#print("updated close time", closeTime)
 	
 	if control_dist_km == 0:
 		closeTime = closeTime.replace(hours=+1)
