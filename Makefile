@@ -12,6 +12,9 @@
 
 # Many recipes need to be run in the virtual environment, 
 # so run them as $(INVENV) command
+
+#Reverted to make style of past projects because the new style just wasnt working for me for automated install
+
 INVENV = . env/bin/activate ;
 
 Makefile.local: 
