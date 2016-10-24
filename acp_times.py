@@ -56,7 +56,7 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 	else:
 		dists = dist_split(control_dist_km)
 
-	print("dists", dists)
+	#print("dists", dists)
 	times = []
 	for actual_dist, brev_dist in zip(dists, DISTANCES):
 		# takes distance traveled in the distance legs and turns it into the min time per leg 
@@ -69,10 +69,9 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 		time = (hour, minute)
 		times.append(time)
 	
-	
 	openTime = arrow.get(brevet_start_time)
-	print("open time legs", times)
-	print("starting open time", openTime)
+	#print("open time legs", times)
+	#print("starting open time", openTime)
 	for hour, minute in times:
 		minute = openTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
 		if minute >= 60:				  #crashes on minute = 60
@@ -100,7 +99,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 	else:
 		dists = dist_split(control_dist_km)
 
-	print("dists", dists)
+	#print("dists", dists)
 	times = []
 	for actual_dist, brev_dist in zip(dists, DISTANCES):
 		# takes distance traveled in the distance legs and turns it into the min time per leg 
@@ -114,8 +113,8 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 		times.append(time)
 
 	closeTime = arrow.get(brevet_start_time)
-	print("close time legs", times)
-	print("starting close time", closeTime)
+	#print("close time legs", times)
+	#print("starting close time", closeTime)
 	for hour, minute in times:
 		minute = closeTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
 		if minute >= 60:				   #crashes on minute >= 60
@@ -123,6 +122,9 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 			hour += 1
 		closeTime = closeTime.replace(hours=+hour, minute=+minute)
 		#print("updated close time", closeTime)
+	
+	if control_dist_km == 0:
+		closeTime = closeTime.replace(hours=+1)
 	return closeTime.isoformat()
 
 

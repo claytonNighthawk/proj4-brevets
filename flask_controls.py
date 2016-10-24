@@ -38,15 +38,15 @@ app.secret_key = CONFIG.secret_key  # Should allow using session variables
 @app.route("/")
 @app.route("/index")
 def index():
-  app.logger.debug("Main page entry")
-  return flask.render_template('calc.html')
+	app.logger.debug("Main page entry")
+	return flask.render_template('calc.html')
 
 
 @app.errorhandler(404)
 def page_not_found(error):
-    app.logger.debug("Page not found")
-    flask.session['linkback'] =  flask.url_for("/")
-    return flask.render_template('page_not_found.html'), 404
+	app.logger.debug("Page not found")
+	flask.session['linkback'] =  flask.url_for("index")
+	return flask.render_template('page_not_found.html')
 
 
 ###############
@@ -57,32 +57,37 @@ def page_not_found(error):
 ###############
 @app.route("/_calc_times")
 def _calc_times():
-  """
-  Calculates open/close times from miles, using rules 
-  described at https://rusa.org/octime_alg.html.
-  Expects one URL-encoded argument, the number of miles. 
-  """
-  app.logger.debug("Got a JSON request");
-  km = request.args.get('km', 0, type=int)
-  #FIXME: These probably aren't the right open and close times
-  open_time = acp_times.open_time(km, 200, arrow.now().isoformat)
-  close_time = acp_times.close_time(km, 200, arrow.now().isoformat)
-  result={ "open": open_time, "close": close_time }
-  return jsonify(result=result)
-
+	"""
+	Calculates open/close times from kilometers, using rules 
+	described at https://rusa.org/octime_alg.html.
+	Expects one URL-encoded argument, the number of kilometers. 
+	"""
+	app.logger.debug("Got a JSON request");
+	km = request.args.get('km', 0, type=int)
+	begin_time = request.args.get('begin_time', "00:00")
+	begin_date = request.args.get('begin_date', "2017-01-01")
+	brevet_distance = request.args.get('distance', 1000, type=int)
+	date_time = begin_date + "T" + begin_time
+	print("km =", km)
+	print("date_time =", date_time)
+	print("distance =", brevet_distance)
+	open_time = acp_times.open_time(km, brevet_distance, date_time)
+	close_time = acp_times.close_time(km, brevet_distance, date_time)
+	result={ "open": open_time, "close": close_time }
+	return jsonify(result=result)
 
 #############
 
 if __name__ == "__main__":
-    # Standalone. 
-    app.debug = True
-    app.logger.setLevel(logging.DEBUG)
-    print("Opening for global access on port {}".format(CONFIG.PORT))
-    app.run(port=CONFIG.PORT, host="0.0.0.0")
+	# Standalone. 
+	app.debug = True
+	app.logger.setLevel(logging.DEBUG)
+	print("Opening for global access on port {}".format(CONFIG.PORT))
+	app.run(port=CONFIG.PORT, host="0.0.0.0")
 else:
-    # Running from cgi-bin or from gunicorn WSGI server, 
-    # which makes the call to app.run.  Gunicorn may invoke more than
-    # one instance for concurrent service.
-    #FIXME:  Debug cgi interface 
-    app.debug=False
+	# Running from cgi-bin or from gunicorn WSGI server, 
+	# which makes the call to app.run.  Gunicorn may invoke more than
+	# one instance for concurrent service.
+	#FIXME:  Debug cgi interface 
+	app.debug=False
 
