@@ -30,6 +30,7 @@ import CONFIG
 app = flask.Flask(__name__)
 import CONFIG
 app.secret_key = CONFIG.secret_key  # Should allow using session variables
+ACCEPTABLE_DISTANCES = [200, 300, 400, 600, 1000]
 
 ###
 # Pages
