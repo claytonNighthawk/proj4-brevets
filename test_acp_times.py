@@ -5,9 +5,9 @@ following rules described at https://rusa.org/octime_alg.html
 and https://rusa.org/pages/rulesForRiders
 """
 '''
-currently fails 3 tests, 2 due to a control longer than the brevet distance not maching the arbitrary
-increase of closing time for a control at >200 and >400 (but not any of the others, I checked) for
-respectively 200 and 400km length brevets. 
+currently fails 3 tests, 2 due to a control longer than the brevet distance not maching the apparently arbitrary
+increase of closing time for a control at >200 and >400 (but not any of the others, I checked) for 200 and 400km length brevets 
+respectively. 
 
 the other failure is from, I can only assume, a rounding issue introduced by following their rules on
 how to calculate times where you round every intermediate calculation to the nearest minute. 
