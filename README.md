@@ -2,6 +2,30 @@
 
 Reimplement the RUSA ACP controle time calculator with flask and ajax
 
+### What do I need?  Where will it work? ###
+
+* Designed for Unix, mostly interoperable on Linux (Ubuntu) or MacOS.
+  Target environment is Raspberry Pi. 
+  ** May also work on Windows (at least the W10 Ubuntu bash) or a Linux virtual machine
+   out of the box depending on your pyvenv package command name. Program might require manual configuration with `. env/bin/activate`, `make configure` and `pip install -r requirements.txt` or changing the PYVENV command name in templates.d/Makefile.standard between pyvenv and virtualenv. I could not get "pyvenv" to install on my pi or anywhere else but virtualenv worked everywhere.    
+   
+* You will also need Python version 3.4 or higher. 
+* Designed to work in "user mode" (unprivileged), therefore using a port 
+  number above 1000 (rather than port 80 that a privileged web server would use)
+
+## In your workspace
+
+`bash ./configure` or `make run` should create appropriate configuration files on
+most Unix files.   If you are using Windows, some additional editing
+of configuration files may be necessary (similar to what was mentioned above).  You might have to edit the
+Makefile to find the right version of pyvenv.
+
+If you can run flask applications in your development environment, the
+application would might be run by
+`   python3 flask_controls.py` or `make run`
+and then reached with url
+`   http://localhost:5000`
+
 ## ACP controle times
 
 That's "controle" with an 'e', because it's French, although "control"
@@ -10,39 +34,8 @@ a rider must obtain proof of passage, and control[e] times are the
 minimum and maximum times by which the rider must  
 arrive at the location.   
 
-The algorithm for calculating controle times is described at
-https://rusa.org/octime_alg.html . The description is ambiguous,
-but the examples help.  Part of finishing this project is clarifying
-anything that is not clear about the requirements, and documenting it
-clearly.  
-
-We are essentially replacing the calculator at
-https://rusa.org/octime_acp.html .  We can also use that calculator
-to clarify requirements and develop test data.  
-
-## AJAX and Flask reimplementation
-
-The current RUSA controle time calculator is a Perl script that takes
-an HTML form and emits a text page. The reimplementation will fill in
-times as the input fields are filled.  Each time a distance is filled
-in, the corresponding open and close times should be filled in.   
-
-I will leave much of the design to you.   
+Replaces the calculator at https://rusa.org/octime_acp.html .  
 
 ## Testing
 
-A suite of nose test cases is a requirement of this project.  Design
-the test cases based on an interpretation of rules at
-https://rusa.org/octime_alg.html .  Be sure to test your test
-cases:  You can use the current brevet time calculator (
-https://rusa.org/octime_acp.html ) to check that your expected test
-outputs are correct. While checking these values once is a manual
-operation, re-running your test cases should be automated in the usual
-manner as a Nose test suite.
-
-To make automated testing more practical, your open and close time
-calculations should be in a separate module.  Because I want to be 
-able to use my test suite as well as yours, I will require that 
-module be named acp_times.py and contain the two functions I have 
-included in the skeleton code (though revised, of course, to 
-return correct results). 
+A suite of nose test cases is included in this repo. They can be reached by `make test`.  
