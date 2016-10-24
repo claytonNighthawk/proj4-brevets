@@ -60,7 +60,8 @@ def _calc_times():
 	"""
 	Calculates open/close times from kilometers, using rules 
 	described at https://rusa.org/octime_alg.html.
-	Expects one URL-encoded argument, the number of kilometers. 
+	Expects a URL-encoded argument, which includes number of kilometers, the begin time, the begin_date
+	and the brevet distance. 
 	"""
 	app.logger.debug("Got a JSON request");
 	km = request.args.get('km', 0, type=int)
@@ -68,9 +69,10 @@ def _calc_times():
 	begin_date = request.args.get('begin_date', "2017-01-01")
 	brevet_distance = request.args.get('distance', 1000, type=int)
 	date_time = begin_date + "T" + begin_time
-	print("km =", km)
-	print("date_time =", date_time)
-	print("distance =", brevet_distance)
+
+	#checks for correct input, doesn't need to check anything not a number because args.get returns an int or 1000
+	if brevet_distance not in ACCEPTABLE_DISTANCES:
+		brevet_distance = 1000 #sets number to acceptable standar
 	open_time = acp_times.open_time(km, brevet_distance, date_time)
 	close_time = acp_times.close_time(km, brevet_distance, date_time)
 	result={ "open": open_time, "close": close_time }

@@ -107,9 +107,9 @@
 	function calc_times(control) {
 		console.log(control);
 		var km = control.find("input[name='km']").val();
-		var begin_date = control.find("input[name='begin_date']").val();
-		var begin_time = control.find("input[name='begin_time']").val();
-		var distance = control.find("select[name='distance']").val();
+		var begin_date = $("#begin_date").val();
+		var begin_time = $("#begin_time").val();
+		var distance = $("#brevet_dist_km").val();
 		var open_time_field = control.find("input[name='open']");
 		var close_time_field = control.find("input[name='close']");
 
@@ -137,7 +137,7 @@ $(document).ready(function(){
 			var miles = parseFloat($(this).val());
 			var km = (1.609344 * miles).toFixed(1);
 			//console.log("Converted " + miles + " miles to " + km + " kilometers");
-			var data_entry = $(this).parents(".container");
+			var data_entry = $(this).parents(".control");
 			var target = data_entry.find("input[name='km']");
 			target.val(km);
 			// Then calculate times for this entry
@@ -149,31 +149,31 @@ $(document).ready(function(){
 			var km = parseFloat($(this).val());
 			var miles = (0.621371 * km).toFixed(1) ;
 			//console.log("Converted " + km + " km to " + miles + " miles");
-			var data_entry = $(this).parents(".container")
+			var data_entry = $(this).parents(".control")
 			var target = data_entry.find("input[name='miles']");
 			target.val(miles);
 			// Then calculate times for this entry
 			calc_times(data_entry);
 		});
 
-	$('input[name="begin_time"]').change(
+	$('#begin_time').change(
 		function(){
 			var begin_time = $(this).val();
-			var data_entry = $(this).parents(".container");
+			var data_entry = $(this).parents(".row");
 			calc_times(data_entry);
 		});
 
-	$('input[name="begin_date"]').change(
+	$('#begin_date').change(
 		function(){
 			var begin_date = $(this).val();
-			var data_entry = $(this).parents(".container");
+			var data_entry = $(this).parents(".row");
 			calc_times(data_entry);
 		});
 
-	$('select[name="distance"]').change(
+	$('#brevet_dist_km').change(
 		function(){
 			var distance = parseInt($(this).val());
-			var data_entry = $(this).parents(".container");
+			var data_entry = $(this).parents(".row");
 			calc_times(data_entry);
 		});
 
