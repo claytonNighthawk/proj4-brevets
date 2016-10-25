@@ -69,11 +69,11 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 	
 	openTime = arrow.get(brevet_start_time)
 	for hour, minute in times:
-		minute = openTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
-		if minute >= 60:				  #crashes on minute = 60
-			minute -= 60
-			hour += 1
-		openTime = openTime.replace(hours=+hour, minute=+minute)		
+		#minute = openTime.minute + minute #not actually a bug I miss used minutes/minute with replace  
+		#if minute >= 60:				 
+			#minute -= 60
+			#hour += 1
+		openTime = openTime.replace(hours=+hour, minutes=+minute)		
 	return openTime.isoformat()
 
 def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
@@ -107,11 +107,11 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 
 	closeTime = arrow.get(brevet_start_time)
 	for hour, minute in times:
-		minute = closeTime.minute + minute #BUG done because minute=+minute just replaces instead of adds minutes 
-		if minute >= 60:				   #crashes on minute >= 60
-			minute -= 60
-			hour += 1
-		closeTime = closeTime.replace(hours=+hour, minute=+minute)
+		#minute = closeTime.minute + minute #not actually a bug I miss used minutes/minute with replace 
+		#if minute >= 60:				   
+			#minute -= 60
+			#hour += 1
+		closeTime = closeTime.replace(hours=+hour, minutes=+minute)
 	
 	if control_dist_km == 0:
 		closeTime = closeTime.replace(hours=+1)
